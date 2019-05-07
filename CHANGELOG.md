@@ -23,5 +23,6 @@
 ## 0.0.1 / 2019-05-07
 - Initial version v0.0.1
 - add `CHANGELOG.md`
+- add `README.md`
 - export function `accumulator`
 - export function `defineAccumulator`
