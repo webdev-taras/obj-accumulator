@@ -1,14 +1,4 @@
-module.exports = {
-  accumulator,
-  defineAccumulator
-}
-
-function defineAccumulator(obj, methodName, getterNameParam) {
-  const getterName = getterNameParam || methodName+'s';
-  const { method, getter } = accumulator();
-  Object.defineProperty(obj, methodName, { value: method })
-  Object.defineProperty(obj, getterName, { get: getter })
-}
+module.exports = accumulator
 
 function accumulator() {
   const storage = {}
