@@ -1,5 +1,5 @@
 const test = require('ava')
-const accumulator = require('./obj-accumulator')
+const accumulator = require('../obj-accumulator')
 const arr = require('./data.mock')
 
 test.beforeEach(t => {

@@ -1,5 +1,5 @@
 const test = require('ava')
-const defineAccumulator = require('./define-accumulator')
+const defineAccumulator = require('../define-accumulator')
 const arr = require('./data.mock')
 
 const checkProperties = (t, methodName, getterNameParam) => {
