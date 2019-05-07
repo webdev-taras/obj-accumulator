@@ -10,12 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:webdev-taras/obj-accumulator.git"
+    "url": "git+https://github.com:webdev-taras/obj-accumulator.git"
   },
   "keywords": [
     "object",
     "accumulator",
-    "storage"
+    "accumulate",
+    "storage",
+    "module",
+    "modularity"
   ],
   "author": "Taras Panasiuk",
   "license": "MIT",
