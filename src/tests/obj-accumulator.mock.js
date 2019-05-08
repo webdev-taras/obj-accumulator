@@ -1,8 +1,10 @@
-module.exports = { method, getter, accumulator }
+const sinon = require('sinon')
 
 function method() {}
 function getter() {}
 
-function accumulator() {
+const accumulator = sinon.spy((itemName = 'item', listName = 'list') => {
   return { method, getter }
-}
+})
+
+module.exports = { method, getter, accumulator }

@@ -24,7 +24,8 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "^1.4.1",
-    "nyc": "^14.1.0"
+    "nyc": "^14.1.0",
+    "sinon": "^7.3.2"
   },
   "ava": {
     "files": "**/*.test.js",
@@ -33,6 +34,9 @@
   },
   "nyc": {
     "include": "src",
-    "exclude": ["**/*.test.js", "**/*.mock.js"] 
+    "exclude": [
+      "**/*.test.js",
+      "**/*.mock.js"
+    ]
   }
 }
