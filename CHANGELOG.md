@@ -17,6 +17,7 @@
 
 ## 0.1.1 / 2019-05-08
 - update `README.md`
+- apply DI to defineAccumulator function
 - add restriction: cannot add object by name already present in storage
 - add requirement: throw error if try to get object by name not presented in storage
 
