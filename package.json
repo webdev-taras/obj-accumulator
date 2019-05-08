@@ -1,6 +1,6 @@
 {
   "name": "obj-accumulator",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "safe and reliable object accumulator",
   "main": "index.js",
   "scripts": {
@@ -24,11 +24,19 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "^1.4.1",
-    "nyc": "^14.1.0"
+    "nyc": "^14.1.0",
+    "sinon": "^7.3.2"
   },
   "ava": {
     "files": "**/*.test.js",
     "babel": false,
     "compileEnhancements": false
+  },
+  "nyc": {
+    "include": "src",
+    "exclude": [
+      "**/*.test.js",
+      "**/*.mock.js"
+    ]
   }
 }
