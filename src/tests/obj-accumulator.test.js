@@ -33,12 +33,13 @@ test('accumulator().method(name) returns object by name if it exists', t => {
   t.deepEqual(t.context.method(obj.name), obj)
 })
 
-test('accumulator().method(name) returns undefined if object doesnt exist by name', t => {
-  t.is(t.context.method('obj'), undefined)
+test('accumulator().method(name) throw error if object doesnt exist by name', t => {
+  const [obj] = arr
+  t.throws(() => t.context.method(obj.name), { instanceOf: Error, message: `item "${obj.name}" is not present in list` })
 })
 
-test('accumulator().method(name) cannot overwrite object by name', t => {
+test('accumulator().method(name) cannot overwrite object by name and throw error', t => {
   const [obj] = arr
   t.context.method(obj.name, obj)
-  t.throws(() => t.context.method(obj.name, obj), { instanceOf: Error })
+  t.throws(() => t.context.method(obj.name, obj), { instanceOf: Error, message: `item "${obj.name}" already present in list` })
 })

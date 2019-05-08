@@ -12,6 +12,10 @@ function accumulator(itemName = 'item', listName = 'list') {
       if (obj) {
         storage[name] = obj
       }
+    } else {
+      if (!storage.hasOwnProperty(name)) {
+        throw new Error(`${itemName} "${name}" is not present in ${listName}`)
+      }
     }
     return storage[name]
   }
