@@ -8,8 +8,8 @@ test.beforeEach(t => {
 
 test('accumulator() returns object with two functions: { method, getter }', t => {
   t.deepEqual(Object.keys(t.context), ['method', 'getter'])
-  t.true(typeof t.context.method === "function")
-  t.true(typeof t.context.getter === "function")
+  t.is(typeof t.context.method, 'function')
+  t.is(typeof t.context.getter, 'function')
 })
 
 test('accumulator().getter() returns ampty array from the beginning', t => {
