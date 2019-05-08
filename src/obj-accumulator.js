@@ -1,12 +1,17 @@
 module.exports = accumulator
 
-function accumulator() {
+function accumulator(itemName = 'item', listName = 'list') {
   const storage = {}
   return { method, getter }
 
   function method(name, obj) {
-    if (obj) {
-      storage[name] = obj
+    if (arguments.length > 1) {
+      if (storage.hasOwnProperty(name)) {
+        throw new Error(`${itemName} "${name}" already present in ${listName}`)
+      }
+      if (obj) {
+        storage[name] = obj
+      }
     }
     return storage[name]
   }
