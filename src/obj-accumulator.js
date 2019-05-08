@@ -9,9 +9,10 @@ function accumulator(itemName = 'item', listName = 'list') {
       if (storage.hasOwnProperty(name)) {
         throw new Error(`${itemName} "${name}" already present in ${listName}`)
       }
-      if (obj) {
-        storage[name] = obj
+      if (obj == undefined) { // if empty obj
+        throw new Error(`value for ${itemName} "${name}" should not be empty`)
       }
+      storage[name] = obj
     } else {
       if (!storage.hasOwnProperty(name)) {
         throw new Error(`${itemName} "${name}" is not present in ${listName}`)
