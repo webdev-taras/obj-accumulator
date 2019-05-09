@@ -36,7 +36,10 @@
     "include": "src",
     "exclude": [
       "**/*.test.js",
-      "**/*.mock.js"
+      "**/*.spy.js",
+      "**/*.stub.js",
+      "**/*.mock.js",
+      "**/*.fake.js"
     ]
   }
 }

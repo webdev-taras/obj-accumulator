@@ -1,6 +1,6 @@
 const test = require('ava')
 const defineAccumulatorFactory = require('../define-accumulator')
-const { method, getter, accumulator } = require('./obj-accumulator.mock')
+const { method, getter, accumulator } = require('./obj-accumulator.fake')
 
 const checkProperties = (t, methodName, getterNameParam) => {
   const getterName = getterNameParam || methodName+'s'
@@ -18,10 +18,17 @@ const checkProperties = (t, methodName, getterNameParam) => {
   const getterNameProps = Object.getOwnPropertyDescriptor(storage, getterName)
   t.is(getterNameProps.get, getter)
   t.false(!!getterNameProps.writable)
-
-  t.true(accumulator.calledWith(methodName, getterName));
 }
 
 test('defineAccumulator() adds two properties to storage: module() and moduleList', checkProperties, 'module', 'moduleList')
 
 test('defineAccumulator() adds two properties to storage: module() and modules', checkProperties, 'module')
+
+test('defineAccumulator() calls accumulator()', t => {
+  const storage = {}
+  const defineAccumulator = defineAccumulatorFactory(accumulator)
+  defineAccumulator(storage, 'module')
+
+  t.true(accumulator.calledWith('module', 'modules'));
+  t.true(accumulator.returned({ method, getter }));
+})

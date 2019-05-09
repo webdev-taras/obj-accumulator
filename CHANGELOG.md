@@ -12,6 +12,7 @@
 
 ## 0.1.2 / 2019-05-10
 - update `README.md`
+- define-accumulator.test refactoring 
 - add validation function as a parameter in order to check
   that objects of the same type are being added (can use: instanseof, duck typing, validation...)
 
