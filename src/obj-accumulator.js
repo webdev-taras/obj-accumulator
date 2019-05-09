@@ -1,6 +1,6 @@
 module.exports = accumulator
 
-function accumulator(itemName = 'item', listName = 'list') {
+function accumulator(itemName = 'item', listName = 'list', validator) {
   const storage = {}
   return { method, getter }
 
@@ -11,6 +11,9 @@ function accumulator(itemName = 'item', listName = 'list') {
       }
       if (obj == undefined) { // if empty obj
         throw new Error(`value for ${itemName} "${name}" should not be empty`)
+      }
+      if (validator && !validator(obj)) {
+        // throw new Error(`value for ${itemName} "${name}" is not valid`)
       }
       storage[name] = obj
     } else {
