@@ -1,0 +1,23 @@
+const test = require('ava')
+const accumulator = require('../src/accumulator')
+const { validator } = require('./accumulator.fake')
+
+test.beforeEach(t => {
+  t.context = accumulator('item', 'list', validator)
+})
+
+test('accumulator(validator).method(name, obj) validate the obj', t => {
+  const name = 'token'
+  const obj = 'blablabla'
+  t.context.method(name, obj)
+  t.is(t.context.method(name), obj)
+  t.true(validator.calledWith(obj));
+  t.true(validator.returned(true));
+})
+
+test('accumulator(validator).method(name, obj) throws error if obj is not valid', t => {
+  const name = 'token'
+  const obj = 1
+  t.throws(() => t.context.method(name, obj), { instanceOf: Error, message: `value for item "${name}" is not valid` })
+  t.is(t.context.getter().length, 0)
+})

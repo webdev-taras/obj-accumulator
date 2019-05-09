@@ -1,6 +1,6 @@
 const test = require('ava')
-const defineAccumulatorFactory = require('../define-accumulator')
-const { method, getter, accumulator } = require('./obj-accumulator.fake')
+const defineAccumulatorFactory = require('../src/define-accumulator')
+const { method, getter, accumulator } = require('./accumulator.fake')
 
 const checkProperties = (t, methodName, getterNameParam) => {
   const getterName = getterNameParam || methodName+'s'
