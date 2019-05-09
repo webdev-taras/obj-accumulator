@@ -37,7 +37,8 @@ test('accumulator().method(name, obj) throws error if name already present in st
 test('accumulator().method(name, obj) throws error if obj is empty', t => {
   const name = 'obj'
   const obj = null
-  t.throws(() => t.context.method(name, obj), { instanceOf: Error, message: `value for item "${name}" should not be empty` })
+  t.throws(() => t.context.method(name, obj), { instanceOf: Error, message: `value for item "${name}" is not valid` })
+  t.is(t.context.getter().length, 0)
 })
 
 test('accumulator().method(name) returns object by name if it exists', t => {
@@ -68,4 +69,5 @@ test('accumulator(validator).method(name, obj) throws error if obj is not valid'
   const validator = sinon.spy((p) => typeof(p) === 'string')
   t.context = accumulator('item', 'list', validator)
   t.throws(() => t.context.method(name, obj), { instanceOf: Error, message: `value for item "${name}" is not valid` })
+  t.is(t.context.getter().length, 0)
 })

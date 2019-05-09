@@ -15,6 +15,8 @@
 - define-accumulator.test refactoring 
 - add validation function as a parameter in order to check
   that objects of the same type are being added (can use: instanseof, duck typing, validation...)
+- set as a default validation the restriction: cannot add empty object in storage
+- rename functions `method` and `getter` to `item` and `list` accordingly
 
 ## 0.1.1 / 2019-05-08
 - update `README.md`

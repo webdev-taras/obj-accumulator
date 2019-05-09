@@ -1,6 +1,6 @@
 module.exports = accumulator
 
-function accumulator(itemName = 'item', listName = 'list', validator) {
+function accumulator(itemName = 'item', listName = 'list', validator = isNotEmpty) {
   const storage = {}
   return { method, getter }
 
@@ -8,9 +8,6 @@ function accumulator(itemName = 'item', listName = 'list', validator) {
     if (arguments.length > 1) {
       if (storage.hasOwnProperty(name)) {
         throw new Error(`${itemName} "${name}" already present in ${listName}`)
-      }
-      if (obj == undefined) { // if empty obj
-        throw new Error(`value for ${itemName} "${name}" should not be empty`)
       }
       if (validator && !validator(obj)) {
         throw new Error(`value for ${itemName} "${name}" is not valid`)
@@ -27,4 +24,8 @@ function accumulator(itemName = 'item', listName = 'list', validator) {
   function getter() {
     return Object.keys(storage)
   }
+}
+
+function isNotEmpty(obj) {
+  return (obj != undefined)
 }
