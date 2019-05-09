@@ -13,7 +13,7 @@ function accumulator(itemName = 'item', listName = 'list', validator) {
         throw new Error(`value for ${itemName} "${name}" should not be empty`)
       }
       if (validator && !validator(obj)) {
-        // throw new Error(`value for ${itemName} "${name}" is not valid`)
+        throw new Error(`value for ${itemName} "${name}" is not valid`)
       }
       storage[name] = obj
     } else {

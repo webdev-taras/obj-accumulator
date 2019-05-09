@@ -64,7 +64,7 @@ test('accumulator(validator).method(name, obj) validate the obj', t => {
 
 test('accumulator(validator).method(name, obj) throws error if obj is not valid', t => {
   const name = 'token'
-  const obj = 'blablabla'
+  const obj = 1
   const validator = sinon.spy((p) => typeof(p) === 'string')
   t.context = accumulator('item', 'list', validator)
   t.throws(() => t.context.method(name, obj), { instanceOf: Error, message: `value for item "${name}" is not valid` })
