@@ -1,4 +1,5 @@
 const test = require('ava')
+const sinon = require('sinon')
 const accumulator = require('../obj-accumulator')
 const arr = require('./data.mock')
 
@@ -50,3 +51,13 @@ test('accumulator().method(name) throws error if object doesnt exist', t => {
   t.throws(() => t.context.method(obj.name), { instanceOf: Error, message: `item "${obj.name}" is not present in list` })
 })
 
+test('accumulator(validator).method(name, obj) validate the obj', t => {
+  const name = 'token'
+  const obj = 'blablabla'
+  const validator = sinon.spy((p) => typeof(p) === 'string')
+  t.context = accumulator(validator)
+  t.context.method(name, obj)
+  t.is(t.context.method(name), obj)
+  t.true(validator.calledWith(obj));
+  t.true(accumulator.returned(true));
+})
