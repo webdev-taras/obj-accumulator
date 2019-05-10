@@ -1,6 +1,6 @@
 module.exports = accumulator
 
-function accumulator(itemName = 'item', listName = 'list', validator = isNotEmpty) {
+function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list') {
   const storage = {}
   return { method, getter }
 

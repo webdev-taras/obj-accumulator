@@ -22,10 +22,12 @@ Then we can define *method* and *getter* for some object, for example **app**, i
 ```javascript
 const app = {}
 
-defineAccumulator(app, 'module')
+defineAccumulator(app, isObject, 'module')
 // or
-defineAccumulator(app, 'service')
+defineAccumulator(app, isObject, 'service')
 ```
+For example, `isObject` - the function for validate that value (waht will be added to the storage) is object.
+
 Further we can add *services* by *name* to our *app*:
 ```javascript
 app.service('common', { id: 1, title: 'common service'})
@@ -55,7 +57,7 @@ Two ways are provided to use `obj-accumulator` functionality:
 - add apropriate properties to some object using **defineAccumulator()**
 - receive functions *method* and *getter* as a result of calling **accumulator()** and use them separately
 
-### defineAccumulator(object, method-name, \[getter-name\], \[validator\])
+### defineAccumulator(object, validator, method-name, \[getter-name\])
 
 > Attachs two properties to **object**: "method-name" and "getter-name".
 If "getter-name" is not passed then uses plural form of "method-name" (+"s")
@@ -64,15 +66,15 @@ If "getter-name" is not passed then uses plural form of "method-name" (+"s")
 const { defineAccumulator } = require('obj-accumulator')
 const app = {}
 
-defineAccumulator(app, 'service', 'services')
+defineAccumulator(app, isObject, 'service', 'services')
 // or
-defineAccumulator(app, 'service')
+defineAccumulator(app, isObject, 'service')
 
 // as a result - new properties:
 // app.service(name, object)
 // app.services
 ```
-> `Validator` is a function takes a value as the only argument, returns true if the value is valid and false otherwise. Here is some useful examples with use cases:
+> Second argument `validator` (e.g. isObject) is a function takes a value as the only argument, returns true if the value is valid and false otherwise. Here is some useful examples with use cases:
 ```javascript
 Array.isArray
 // defineAccumulator(storage, 'vector', 'list', Array.isArray)
@@ -87,7 +89,7 @@ const isInstanceOf = (className) =>
 ```
 Also you can use validation functions from widely used libraries.
 
-### accumulator(item-name, \[list-name\], \[validator\])
+### accumulator(\[validator\], \[item-name\], \[list-name\])
 
 > Returns the object with two functions { method, getter } which provide access to storage
 
