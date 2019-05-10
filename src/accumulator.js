@@ -2,9 +2,9 @@ module.exports = accumulator
 
 function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list') {
   const storage = {}
-  return { method, getter }
+  return { item, list }
 
-  function method(name, obj) {
+  function item(name, obj) {
     if (arguments.length > 1) {
       if (storage.hasOwnProperty(name)) {
         throw new Error(`${itemName} "${name}" already present in ${listName}`)
@@ -21,7 +21,7 @@ function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list
     return storage[name]
   }
   
-  function getter() {
+  function list() {
     return Object.keys(storage)
   }
 }

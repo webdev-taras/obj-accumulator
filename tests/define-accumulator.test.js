@@ -1,23 +1,23 @@
 const test = require('ava')
 const defineAccumulatorFactory = require('../src/define-accumulator')
-const { method, getter, validator, accumulator } = require('./accumulator.fake')
+const { item, list, validator, accumulator } = require('./accumulator.fake')
 
-const checkProperties = (t, methodName, getterNameParam) => {
-  const getterName = getterNameParam || methodName+'s'
+const checkProperties = (t, itemName, listNameParam) => {
+  const listName = listNameParam || itemName+'s'
   const storage = {}
 
   const defineAccumulator = defineAccumulatorFactory(accumulator)
-  defineAccumulator(storage, null, methodName, getterNameParam)
-  t.true(storage.hasOwnProperty(methodName))
-  t.true(storage.hasOwnProperty(getterName))
+  defineAccumulator(storage, null, itemName, listNameParam)
+  t.true(storage.hasOwnProperty(itemName))
+  t.true(storage.hasOwnProperty(listName))
 
-  const methodNameProps = Object.getOwnPropertyDescriptor(storage, methodName)
-  t.is(methodNameProps.value, method)
-  t.false(methodNameProps.writable)
+  const itemNameProps = Object.getOwnPropertyDescriptor(storage, itemName)
+  t.is(itemNameProps.value, item)
+  t.false(itemNameProps.writable)
 
-  const getterNameProps = Object.getOwnPropertyDescriptor(storage, getterName)
-  t.is(getterNameProps.get, getter)
-  t.false(!!getterNameProps.writable)
+  const listNameProps = Object.getOwnPropertyDescriptor(storage, listName)
+  t.is(listNameProps.get, list)
+  t.false(!!listNameProps.writable)
 }
 
 test('defineAccumulator(storage, null, "module", "moduleList") adds two properties to storage', checkProperties, 'module', 'moduleList')
@@ -30,5 +30,5 @@ test('defineAccumulator(storage, validator, "module") calls accumulator()', t =>
   defineAccumulator(storage, validator, 'module')
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));
-  t.true(accumulator.returned({ method, getter }));
+  t.true(accumulator.returned({ item, list }));
 })

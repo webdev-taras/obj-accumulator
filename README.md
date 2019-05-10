@@ -18,7 +18,7 @@ Just required function **defineAccumulator** from module:
 ```javascript
 const { defineAccumulator } = require('obj-accumulator')
 ```
-Then we can define *method* and *getter* for some object, for example **app**, in order to collect modules, services, etc.:
+Then we can define *item* and *list* for some object, for example **app**, in order to collect modules, services, etc.:
 ```javascript
 const app = {}
 
@@ -55,12 +55,12 @@ const services = app.services.map(name => app.service(name))
 
 Two ways are provided to use `obj-accumulator` functionality:
 - add apropriate properties to some object using **defineAccumulator()**
-- receive functions *method* and *getter* as a result of calling **accumulator()** and use them separately
+- receive functions *item* and *list* as a result of calling **accumulator()** and use them separately
 
-### defineAccumulator(object, validator, method-name, \[getter-name\])
+### defineAccumulator(object, validator, item-name, \[list-name\])
 
-> Attachs two properties to **object**: "method-name" and "getter-name".
-If "getter-name" is not passed then uses plural form of "method-name" (+"s")
+> Attachs two properties to **object**: "item-name" and "list-name".
+If "list-name" is not passed then uses plural form of "item-name" (+"s")
 
 ```javascript
 const { defineAccumulator } = require('obj-accumulator')
@@ -91,32 +91,32 @@ Also you can use validation functions from widely used libraries.
 
 ### accumulator(\[validator\], \[item-name\], \[list-name\])
 
-> Returns the object with two functions { method, getter } which provide access to storage
+> Returns the object with two functions { item, list } which provide access to storage
 
 ```javascript
 const { accumulator } = require('obj-accumulator')
-const { method, getter } = accumulator()
+const { item, list } = accumulator()
 ```
 
-### method(name, object)
+### item(name, object)
 
 > Adds to storage passed object (by name) and return it
 
 ```javascript
-method('common', { id: 1, title: 'common service'})
-method('main', { id: 2, title: 'main service'})
-method('my-first-service', { id: 3, title: 'my first service'})
+item('common', { id: 1, title: 'common service'})
+item('main', { id: 2, title: 'main service'})
+item('my-first-service', { id: 3, title: 'my first service'})
 
-method('main')
+item('main')
 // result: { id: 2, title: 'main service'}
 ```
 
-### getter()
+### list()
 
 > Returns the list of object names
 
 ```javascript
-getter()
+list()
 // result: ['common', 'main', 'my-first-service']
 ```
 

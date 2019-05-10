@@ -6,12 +6,12 @@ test.beforeEach(t => {
   t.context = accumulator()
 })
 
-test('accumulator().getter() returns ampty array from the beginning', t => {
-  t.deepEqual(t.context.getter(), [])
+test('accumulator().list() returns ampty array from the beginning', t => {
+  t.deepEqual(t.context.list(), [])
 })
 
-test('accumulator().getter() returns array of accumulated objects', t => {
-  arr.forEach(obj => t.context.method(obj.name, obj))
+test('accumulator().list() returns array of accumulated objects', t => {
+  arr.forEach(obj => t.context.item(obj.name, obj))
   const names = arr.map(obj => obj.name)
-  t.deepEqual(t.context.getter(), names)
+  t.deepEqual(t.context.list(), names)
 })

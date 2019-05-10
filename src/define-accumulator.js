@@ -1,8 +1,8 @@
 module.exports = (accumulator) => {
-  return function defineAccumulator(obj, validator, methodName, getterNameParam) {
-    const getterName = getterNameParam || methodName+'s'
-    const { method, getter } = accumulator(validator, methodName, getterName)
-    Object.defineProperty(obj, methodName, { value: method })
-    Object.defineProperty(obj, getterName, { get: getter })
+  return function defineAccumulator(obj, validator, itemName, listNameParam) {
+    const listName = listNameParam || itemName+'s'
+    const { item, list } = accumulator(validator, itemName, listName)
+    Object.defineProperty(obj, itemName, { value: item })
+    Object.defineProperty(obj, listName, { get: list })
   }
 }

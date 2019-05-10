@@ -1,9 +1,9 @@
 const sinon = require('sinon')
 
-function method() {}
-function getter() {}
+function item() {}
+function list() {}
 const validator = sinon.spy((p) => typeof(p) === 'string')
 
-const accumulator = sinon.fake.returns({ method, getter })
+const accumulator = sinon.fake.returns({ item, list })
 
-module.exports = { method, getter, validator, accumulator }
+module.exports = { item, list, validator, accumulator }
