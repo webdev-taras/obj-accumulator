@@ -1,6 +1,6 @@
 const test = require('ava')
 const defineAccumulatorFactory = require('../src/define-accumulator')
-const { method, getter, accumulator } = require('./accumulator.fake')
+const { method, getter, validator, accumulator } = require('./accumulator.fake')
 
 const checkProperties = (t, methodName, getterNameParam) => {
   const getterName = getterNameParam || methodName+'s'
@@ -20,15 +20,24 @@ const checkProperties = (t, methodName, getterNameParam) => {
   t.false(!!getterNameProps.writable)
 }
 
-test('defineAccumulator() adds two properties to storage: module() and moduleList', checkProperties, 'module', 'moduleList')
+test('defineAccumulator(storage, "module", "moduleList") adds two properties to storage', checkProperties, 'module', 'moduleList')
 
-test('defineAccumulator() adds two properties to storage: module() and modules', checkProperties, 'module')
+test('defineAccumulator(storage, "module") adds two properties to storage', checkProperties, 'module')
 
-test('defineAccumulator() calls accumulator()', t => {
+test('defineAccumulator(storage, "module") calls accumulator()', t => {
   const storage = {}
   const defineAccumulator = defineAccumulatorFactory(accumulator)
   defineAccumulator(storage, 'module')
 
   t.true(accumulator.calledWith('module', 'modules'));
+  t.true(accumulator.returned({ method, getter }));
+})
+
+test('defineAccumulator(storage, "module", "", validator) calls accumulator() with validator', t => {
+  const storage = {}
+  const defineAccumulator = defineAccumulatorFactory(accumulator)
+  defineAccumulator(storage, 'module', '', validator)
+
+  t.true(accumulator.calledWith('module', 'modules', validator));
   t.true(accumulator.returned({ method, getter }));
 })

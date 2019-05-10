@@ -2,6 +2,8 @@
 
 Provides safe and reliable way to accumulate and store objects in storage not reachable outside.
 
+Adding object into storage can be restricted by validation (e.g. instanceof, typeof, duck typing...) in order to be sure if all objects in storage are the same type.
+
 ## Install
 
 > Install on Node.JS with [npm](https://www.npmjs.com/)
@@ -34,7 +36,7 @@ Also we can get *service* by name:
 ```javascript
 const mainService = app.service('main')
 ```
-And get list of names (of services):
+And get the list of names (of services):
 ```javascript
 const names = app.services
 names.forEach(name => {
@@ -49,14 +51,14 @@ const services = app.services.map(name => app.service(name))
 
 ## API
 
-Two ways are provided to use accumulator functionality:
+Two ways are provided to use `obj-accumulator` functionality:
 - add apropriate properties to some object using **defineAccumulator()**
 - receive functions *method* and *getter* as a result of calling **accumulator()** and use them separately
 
-### defineAccumulator(object, method-name, \<getter-name\>)
+### defineAccumulator(object, method-name, \[getter-name\], \[validator\])
 
 > Attachs two properties to **object**: "method-name" and "getter-name".
-If "getter-name" not passed then uses plural form of "method-name" (+"s")
+If "getter-name" is not passed then uses plural form of "method-name" (+"s")
 
 ```javascript
 const { defineAccumulator } = require('obj-accumulator')
@@ -70,8 +72,22 @@ defineAccumulator(app, 'service')
 // app.service(name, object)
 // app.services
 ```
+> `Validator` is a function takes a value as the only argument, returns true if the value is valid and false otherwise. Here is some useful examples with use cases:
+```javascript
+Array.isArray
+// defineAccumulator(storage, 'vector', 'list', Array.isArray)
 
-### accumulator()
+const isTypeOf = (typeName) =>
+  (value) => typeof(value) === typeName
+// defineAccumulator(storage, 'token', 'tokens', isTypeOf('string'))
+
+const isInstanceOf = (className) =>
+  (value) => value instanceof className
+// defineAccumulator(app, 'service', '', isInstanceOf(MyService))
+```
+Also you can use validation functions from widely used libraries.
+
+### accumulator(item-name, \[list-name\], \[validator\])
 
 > Returns the object with two functions { method, getter } which provide access to storage
 
