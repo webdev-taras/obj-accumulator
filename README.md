@@ -77,15 +77,15 @@ defineAccumulator(app, isObject, 'service')
 > Second argument `validator` (e.g. isObject) is a function takes a value as the only argument, returns true if the value is valid and false otherwise. Here is some useful examples with use cases:
 ```javascript
 Array.isArray
-// defineAccumulator(storage, 'vector', 'list', Array.isArray)
+// defineAccumulator(storage, Array.isArray, 'vector', 'list')
 
 const isTypeOf = (typeName) =>
   (value) => typeof(value) === typeName
-// defineAccumulator(storage, 'token', 'tokens', isTypeOf('string'))
+// defineAccumulator(storage, isTypeOf('string'), 'token', 'tokens')
 
 const isInstanceOf = (className) =>
   (value) => value instanceof className
-// defineAccumulator(app, 'service', '', isInstanceOf(MyService))
+// defineAccumulator(app, isInstanceOf(MyService), 'service')
 ```
 Also you can use validation functions from widely used libraries.
 
