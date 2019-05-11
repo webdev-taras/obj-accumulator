@@ -1,4 +1,4 @@
-const accumulator = require('./src/obj-accumulator')
+const accumulator = require('./src/accumulator')
 const defineAccumulator = require('./src/define-accumulator')(accumulator)
 
 module.exports = {
