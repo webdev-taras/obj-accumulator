@@ -3,7 +3,8 @@ const accumulator = require('../src/accumulator')
 const arr = require('./data.mock')
 
 test.beforeEach(t => {
-  t.context = accumulator()
+  t.context.item = accumulator()
+  t.context.list = t.context.item.list
 })
 
 test('accumulator().item(name, obj) accumulate object by name and return it', t => {

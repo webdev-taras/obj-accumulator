@@ -3,7 +3,8 @@ const accumulator = require('../src/accumulator')
 const { validator } = require('./accumulator.fake')
 
 test.beforeEach(t => {
-  t.context = accumulator(validator, 'item', 'list')
+  t.context.item = accumulator(validator, 'item', 'list')
+  t.context.list = t.context.item.list
 })
 
 test('accumulator(validator).item(name, obj) validate the obj', t => {
