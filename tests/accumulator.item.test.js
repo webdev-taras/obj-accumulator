@@ -10,12 +10,14 @@ test.beforeEach(t => {
 test('accumulator().item(name, obj) accumulate object by name and return it', t => {
   const [obj] = arr
   t.deepEqual(t.context.item(obj.name, obj), obj)
+  t.is(t.context.list().length, 1)
 })
 
 test('accumulator().item(name, obj) throws error if name already present in storage', t => {
   const [obj] = arr
   t.context.item(obj.name, obj)
   t.throws(() => t.context.item(obj.name, obj), { instanceOf: Error, message: `item "${obj.name}" already present in list` })
+  t.is(t.context.list().length, 1)
 })
 
 test('accumulator().item(name, obj) throws error if obj is empty', t => {
