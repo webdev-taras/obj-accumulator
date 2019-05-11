@@ -1,6 +1,6 @@
 # obj-accumulator
 
-Provides safe and reliable way to accumulate and store objects in storage not reachable outside.
+Provides reliable way to accumulate and store objects in safe storage not changeable outside.
 
 Adding object into storage can be restricted by validation (e.g. instanceof, typeof, duck typing...) in order to be sure if all objects in storage are the same type.
 
@@ -13,6 +13,12 @@ $ npm install --save webdev-taras/obj-accumulator
 ```
 
 ## Usage
+
+Two ways are provided to use `obj-accumulator` functionality:
+1. Add apropriate properties to some object using **defineAccumulator()**
+2. Receive function as a result of calling **accumulator()** and use it for access to storage
+
+### Use defineAccumulator()
 
 Just required function **defineAccumulator** from module:
 ```javascript
@@ -37,10 +43,12 @@ app.service('my-first-service', { id: 3, title: 'my first service'})
 Also we can get *service* by name:
 ```javascript
 const mainService = app.service('main')
+// result: { id: 2, title: 'main service'}
 ```
 And get the list of names (of services):
 ```javascript
 const names = app.services
+// result: ['common', 'main', 'my-first-service']
 names.forEach(name => {
   const { id, title } = app.service(name)
   console.log(id, title)
@@ -51,15 +59,41 @@ Or even tranform name list to whole list of services if it needed:
 const services = app.services.map(name => app.service(name))
 ```
 
-## API
+### Use accumulator()
 
-Two ways are provided to use `obj-accumulator` functionality:
-- add apropriate properties to some object using **defineAccumulator()**
-- receive functions *item* and *list* as a result of calling **accumulator()** and use them separately
+Second option is to receive function as a result of calling **accumulator()** and use it for access to storage:
+
+```javascript
+const { accumulator } = require('obj-accumulator')
+const service = accumulator(isObject)
+```
+
+Further we can add *services* by *name*:
+
+```javascript
+service('common', { id: 1, title: 'common service'})
+service('main', { id: 2, title: 'main service'})
+service('my-first-service', { id: 3, title: 'my first service'})
+```
+and get *service* by name:
+```javascript
+service('main')
+// result: { id: 2, title: 'main service'}
+```
+
+To get the list of names need to call list() method:
+
+```javascript
+service.list()
+// result: ['common', 'main', 'my-first-service']
+```
+
+
+## API
 
 ### defineAccumulator(object, validator, item-name, \[list-name\])
 
-> Attachs two properties to **object**: "item-name" and "list-name".
+> Attaches two properties to **object**: "item-name" and "list-name".
 If "list-name" is not passed then uses plural form of "item-name" (+"s")
 
 ```javascript
@@ -70,7 +104,7 @@ defineAccumulator(app, isObject, 'service', 'services')
 // or
 defineAccumulator(app, isObject, 'service')
 
-// as a result - new properties:
+// as a result, new properties are added:
 // app.service(name, object)
 // app.services
 ```
@@ -91,32 +125,29 @@ Also you can use validation functions from widely used libraries.
 
 ### accumulator(\[validator\], \[item-name\], \[list-name\])
 
-> Returns the object with two functions { item, list } which provide access to storage
+> Returns the function to provide access to storage
 
 ```javascript
 const { accumulator } = require('obj-accumulator')
-const { item, list } = accumulator()
+const service = accumulator()
 ```
 
-### item(name, object)
+### \<item\>(name, object)
 
 > Adds to storage passed object (by name) and return it
 
 ```javascript
-item('common', { id: 1, title: 'common service'})
-item('main', { id: 2, title: 'main service'})
-item('my-first-service', { id: 3, title: 'my first service'})
-
-item('main')
+service('main', { id: 2, title: 'main service'})
+service('main')
 // result: { id: 2, title: 'main service'}
 ```
 
-### list()
+### \<item\>.list()
 
 > Returns the list of object names
 
 ```javascript
-list()
+service.list()
 // result: ['common', 'main', 'my-first-service']
 ```
 
