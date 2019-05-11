@@ -1,13 +1,26 @@
-## 0.2.2 / 2019-05-17
+## 0.3.2 / 2019-05-24
 - update `README.md`
 - add build (and minified version) ready for the browser
+- publish on npm@v0.3.2
+
+
+## 0.3.1 / 2019-05-17
+- update `README.md`
+- add usage examples
+- do some refactoring
+- publish on npm@v0.3.1
+
+
+## 0.3.0 / 2019-05-15
+- update `README.md`
+- add Accumulator class and use Proxy
+- publish on npm@v0.3.0
 
 
 ## 0.2.1 / 2019-05-13
 - update `README.md`
-- add usage examples
-- do some refactoring
-- publish on npm@v0.1.3
+- `accumulator` returns just `item` as a result
+- do refactoring
 
 
 ## 0.2.0 / 2019-05-10

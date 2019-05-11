@@ -2,7 +2,9 @@ module.exports = accumulator
 
 function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list') {
   const storage = {}
-  return { item, list }
+  item.list = list
+
+  return item
 
   function item(name, obj) {
     if (arguments.length > 1) {

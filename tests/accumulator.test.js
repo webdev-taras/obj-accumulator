@@ -2,11 +2,11 @@ const test = require('ava')
 const accumulator = require('../src/accumulator')
 
 test.beforeEach(t => {
-  t.context = accumulator()
+  t.context.item = accumulator()
 })
 
-test('accumulator() returns object with two functions: { item, list }', t => {
-  t.deepEqual(Object.keys(t.context), ['item', 'list'])
+test('accumulator() returns function with functions "list" as a propetry', t => {
   t.is(typeof t.context.item, 'function')
-  t.is(typeof t.context.list, 'function')
+  t.true(t.context.item.hasOwnProperty('list'))
+  t.is(typeof t.context.item.list, 'function')
 })

@@ -3,7 +3,8 @@ const accumulator = require('../src/accumulator')
 const arr = require('./data.mock')
 
 test.beforeEach(t => {
-  t.context = accumulator()
+  t.context.item = accumulator()
+  t.context.list = t.context.item.list
 })
 
 test('accumulator().list() returns ampty array from the beginning', t => {
