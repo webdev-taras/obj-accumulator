@@ -29,8 +29,9 @@ test('defineAccumulator(storage, null, "module") adds two properties to storage'
 test('defineAccumulator(storage, validator, "module") calls accumulator()', t => {
   const storage = {}
   const defineAccumulator = defineAccumulatorFactory(accumulator)
-  defineAccumulator(storage, validator, 'module')
+  const result = defineAccumulator(storage, validator, 'module')
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));
   t.true(accumulator.returned(item));
+  t.is(result, storage)
 })

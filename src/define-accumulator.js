@@ -5,7 +5,9 @@ module.exports = (accumulator, Accumulator) => {
       ? new Accumulator(validator, itemName, listName)
       : accumulator(validator, itemName, listName)
 
-    Object.defineProperty(obj, itemName, { value: item, enumerable: false })
-    Object.defineProperty(obj, listName, { get: item.list, enumerable: false })
+    return Object.defineProperties(obj, {
+      [itemName]: { value: item, enumerable: false },
+      [listName]: { get: item.list, enumerable: false },
+    })
   }
 }

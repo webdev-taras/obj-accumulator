@@ -11,7 +11,7 @@
 - release v0.3.1
 - publish on npm@v0.3.1
 
-## 0.3.0 / 2019-05-15
+## 0.3.0 / 2019-05-17
 - update `README.md`
 - add Accumulator class and use Proxy
 - release v0.3.0
