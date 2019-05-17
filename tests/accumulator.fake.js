@@ -7,4 +7,11 @@ const validator = sinon.spy((p) => typeof(p) === 'string')
 
 const accumulator = sinon.fake.returns(item)
 
-module.exports = { item, list, validator, accumulator }
+class Accumulator {
+  constructor(...params) {
+    const { list } = accumulator(...params)
+    this.list = list
+  }
+}
+
+module.exports = { item, list, validator, accumulator, Accumulator }

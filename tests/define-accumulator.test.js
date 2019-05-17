@@ -1,6 +1,6 @@
 const test = require('ava')
 const defineAccumulatorFactory = require('../src/define-accumulator')
-const { item, list, validator, accumulator } = require('./accumulator.fake')
+const { item, list, validator, accumulator, Accumulator } = require('./accumulator.fake')
 
 const checkProperties = (t, itemName, listNameParam) => {
   const listName = listNameParam || itemName+'s'
@@ -30,6 +30,16 @@ test('defineAccumulator(storage, validator, "module") calls accumulator()', t =>
   const storage = {}
   const defineAccumulator = defineAccumulatorFactory(accumulator)
   const result = defineAccumulator(storage, validator, 'module')
+
+  t.true(accumulator.calledWith(validator, 'module', 'modules'));
+  t.true(accumulator.returned(item));
+  t.is(result, storage)
+})
+
+test('defineAccumulator(storage, validator, "module", "modules", true) calls class Accumulator', t => {
+  const storage = {}
+  const defineAccumulator = defineAccumulatorFactory(() => {}, Accumulator)
+  const result = defineAccumulator(storage, validator, 'module', 'modules', true)
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));
   t.true(accumulator.returned(item));
