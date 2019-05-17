@@ -2,10 +2,8 @@ class Accumulator {
   constructor(validator = isNotEmpty, itemName = 'item', listName = 'list') {
     const handler = {
       get: (target, prop) => {
-        if (!super[prop]) {
-          if (!target.hasOwnProperty(prop)) {
-            throw new Error(`${itemName} "${prop}" is not present in ${listName}`)
-          }
+        if (!target.hasOwnProperty(prop)) {
+          throw new Error(`${itemName} "${prop}" is not present in ${listName}`)
         }
         return target[prop]
       },
@@ -20,9 +18,6 @@ class Accumulator {
         return true
       },
       deleteProperty() {
-        return false
-      },
-      defineProperty() {
         return false
       },
     }
