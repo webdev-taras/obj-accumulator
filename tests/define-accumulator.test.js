@@ -7,7 +7,8 @@ const checkProperties = (t, itemName, listNameParam) => {
   const storage = {}
 
   const defineAccumulator = defineAccumulatorFactory(accumulator)
-  defineAccumulator(storage, null, itemName, listNameParam)
+  const params = { item: itemName, list: listNameParam }
+  defineAccumulator(storage, params)
   t.true(storage.hasOwnProperty(itemName))
   t.true(storage.hasOwnProperty(listName))
 
@@ -29,7 +30,7 @@ test('defineAccumulator(storage, null, "module") adds two properties to storage'
 test('defineAccumulator(storage, validator, "module") calls accumulator()', t => {
   const storage = {}
   const defineAccumulator = defineAccumulatorFactory(accumulator)
-  const result = defineAccumulator(storage, validator, 'module')
+  const result = defineAccumulator(storage, { validator, item: 'module' })
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));
   t.true(accumulator.returned(item));
@@ -37,16 +38,17 @@ test('defineAccumulator(storage, validator, "module") calls accumulator()', t =>
 })
 
 test('defineAccumulator(storage, null, "module", "moduleList", true) adds one property to storage', t => {
-  const itemName = 'module'
-  const listName = 'moduleList'
+  const item = 'module'
+  const list = 'moduleList'
   const storage = {}
 
   const defineAccumulator = defineAccumulatorFactory(accumulator, accumulatorFactory)
-  defineAccumulator(storage, null, itemName, listName, true)
-  t.true(storage.hasOwnProperty(itemName))
-  t.false(storage.hasOwnProperty(listName))
+  const params = { validator, item, list, useProxy: true }
+  defineAccumulator(storage, params)
+  t.true(storage.hasOwnProperty(item))
+  t.false(storage.hasOwnProperty(list))
 
-  const itemNameProps = Object.getOwnPropertyDescriptor(storage, itemName)
+  const itemNameProps = Object.getOwnPropertyDescriptor(storage, item)
   t.not(itemNameProps.value, item)
   t.false(itemNameProps.writable)
   t.false(itemNameProps.enumerable)
@@ -55,7 +57,8 @@ test('defineAccumulator(storage, null, "module", "moduleList", true) adds one pr
 test('defineAccumulator(storage, validator, "module", "modules", true) calls class Accumulator', t => {
   const storage = {}
   const defineAccumulator = defineAccumulatorFactory(() => {}, accumulatorFactory)
-  const result = defineAccumulator(storage, validator, 'module', 'modules', true)
+  const params = { validator, item: 'module', list: 'modules', useProxy: true }
+  const result = defineAccumulator(storage, params)
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));
   t.true(accumulator.returned(item));

@@ -4,7 +4,12 @@ const setter = require('./setter')
 
 class Accumulator {
   constructor(params = {}) {
-    const { validator = isNotEmpty, item = 'item', list = 'list' } = params
+    const {
+      validator = isNotEmpty,
+      item = 'item',
+      list = 'list'
+    } = params
+
     const handler = {
       get: getter(item, list),
       set: setter(validator, item, list),
@@ -12,6 +17,7 @@ class Accumulator {
         return false
       },
     }
+
     return new Proxy(this, handler)
   }
 }
