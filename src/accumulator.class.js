@@ -3,10 +3,11 @@ const getter = require('./getter')
 const setter = require('./setter')
 
 class Accumulator {
-  constructor(validator = isNotEmpty, itemName = 'item', listName = 'list') {
+  constructor(params = {}) {
+    const { validator = isNotEmpty, item = 'item', list = 'list' } = params
     const handler = {
-      get: getter(itemName, listName),
-      set: setter(validator, itemName, listName),
+      get: getter(item, list),
+      set: setter(validator, item, list),
       deleteProperty() {
         return false
       },
@@ -15,8 +16,8 @@ class Accumulator {
   }
 }
 
-module.exports = (...params) => {
-  return new Accumulator(...params)
+module.exports = (validator, item, list) => {
+  return new Accumulator({ validator, item, list })
 }
 
 module.exports.Accumulator = Accumulator
