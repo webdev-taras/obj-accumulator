@@ -2,29 +2,44 @@ module.exports = accumulator
 
 function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list') {
   const storage = {}
-  item.list = list
-
-  return item
+  const getProp = getter(itemName, listName)
+  const setProp = setter(validator, itemName, listName)
 
   function item(name, obj) {
     if (arguments.length > 1) {
-      if (storage.hasOwnProperty(name)) {
-        throw new Error(`${itemName} "${name}" already present in ${listName}`)
-      }
-      if (validator && !validator(obj)) {
-        throw new Error(`value for ${itemName} "${name}" is not valid`)
-      }
-      storage[name] = obj
+      setProp(storage, name, obj)
+      return storage[name]
     } else {
-      if (!storage.hasOwnProperty(name)) {
-        throw new Error(`${itemName} "${name}" is not present in ${listName}`)
-      }
+      return getProp(storage, name)
     }
-    return storage[name]
   }
   
   function list() {
     return Object.keys(storage)
+  }
+
+  item.list = list
+  return item
+}
+
+function getter(itemName, listName) {
+  return (target, prop) => {
+    if (!target.hasOwnProperty(prop)) {
+      throw new Error(`${itemName} "${prop}" is not present in ${listName}`)
+    }
+    return target[prop]
+  }
+}
+
+function setter(validator, itemName, listName) {
+  return (target, prop, value) => {
+    if (target.hasOwnProperty(prop)) {
+      throw new Error(`${itemName} "${prop}" already present in ${listName}`)
+    }
+    if (validator && !validator(value)) {
+      throw new Error(`value for ${itemName} "${prop}" is not valid`)
+    }
+    target[prop] = value
   }
 }
 
