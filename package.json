@@ -1,6 +1,6 @@
 {
   "name": "obj-accumulator",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "safe and reliable object accumulator",
   "main": "index.js",
   "scripts": {
