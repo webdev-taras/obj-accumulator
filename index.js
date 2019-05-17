@@ -1,6 +1,7 @@
 const accumulator = require('./src/accumulator')
-const { Accumulator } = require('./src/accumulator.class')
-const defineAccumulator = require('./src/define-accumulator')(accumulator, Accumulator)
+const accumulatorFactory = require('./src/accumulator.class')
+const { Accumulator } = accumulatorFactory
+const defineAccumulator = require('./src/define-accumulator')(accumulator, accumulatorFactory)
 
 module.exports = {
   accumulator,

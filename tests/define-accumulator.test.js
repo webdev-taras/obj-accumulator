@@ -1,6 +1,6 @@
 const test = require('ava')
 const defineAccumulatorFactory = require('../src/define-accumulator')
-const { item, list, validator, accumulator, Accumulator } = require('./accumulator.fake')
+const { item, list, validator, accumulator, accumulatorFactory } = require('./accumulator.fake')
 
 const checkProperties = (t, itemName, listNameParam) => {
   const listName = listNameParam || itemName+'s'
@@ -36,9 +36,25 @@ test('defineAccumulator(storage, validator, "module") calls accumulator()', t =>
   t.is(result, storage)
 })
 
+test('defineAccumulator(storage, null, "module", "moduleList", true) adds one property to storage', t => {
+  const itemName = 'module'
+  const listName = 'moduleList'
+  const storage = {}
+
+  const defineAccumulator = defineAccumulatorFactory(accumulator, accumulatorFactory)
+  defineAccumulator(storage, null, itemName, listName, true)
+  t.true(storage.hasOwnProperty(itemName))
+  t.false(storage.hasOwnProperty(listName))
+
+  const itemNameProps = Object.getOwnPropertyDescriptor(storage, itemName)
+  t.not(itemNameProps.value, item)
+  t.false(itemNameProps.writable)
+  t.false(itemNameProps.enumerable)
+})
+
 test('defineAccumulator(storage, validator, "module", "modules", true) calls class Accumulator', t => {
   const storage = {}
-  const defineAccumulator = defineAccumulatorFactory(() => {}, Accumulator)
+  const defineAccumulator = defineAccumulatorFactory(() => {}, accumulatorFactory)
   const result = defineAccumulator(storage, validator, 'module', 'modules', true)
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));

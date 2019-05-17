@@ -1,13 +1,12 @@
-module.exports = (accumulator, Accumulator) => {
+module.exports = (accumulator, accumulatorFactory) => {
   return function defineAccumulator(obj, validator, itemName, listNameParam, useProxy = false) {
     const listName = listNameParam || itemName+'s'
-    const item = (useProxy)
-      ? new Accumulator(validator, itemName, listName)
-      : accumulator(validator, itemName, listName)
+    const createAccumulator = (useProxy) ? accumulatorFactory : accumulator
+    const item = createAccumulator(validator, itemName, listName)
 
-    return Object.defineProperties(obj, {
-      [itemName]: { value: item, enumerable: false },
-      [listName]: { get: item.list, enumerable: false },
-    })
+    if (!useProxy) {
+      Object.defineProperty(obj, listName, { get: item.list, enumerable: false })
+    }
+    return Object.defineProperty(obj, itemName, { value: item, enumerable: false })
   }
 }

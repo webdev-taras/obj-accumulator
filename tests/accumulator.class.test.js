@@ -12,5 +12,4 @@ test('new Accumulator() is instance of Accumulator', t => {
 
 test('new Accumulator() returns object with functions "list" as a propetry', t => {
   t.is(typeof t.context.item, 'object')
-  t.is(typeof t.context.item.list, 'function')
 })

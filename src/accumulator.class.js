@@ -2,7 +2,7 @@ class Accumulator {
   constructor(validator = isNotEmpty, itemName = 'item', listName = 'list') {
     const handler = {
       get: (target, prop) => {
-        if (!super[prop] && prop !=='list') {
+        if (!super[prop]) {
           if (!target.hasOwnProperty(prop)) {
             throw new Error(`${itemName} "${prop}" is not present in ${listName}`)
           }
@@ -28,14 +28,14 @@ class Accumulator {
     }
     return new Proxy(this, handler)
   }
-  
-  list() {
-    return Object.keys(this)
-  }
 }
 
 function isNotEmpty(obj) {
   return (obj != undefined)
 }
 
-module.exports = { Accumulator }
+module.exports = (...params) => {
+  return new Accumulator(...params)
+}
+
+module.exports.Accumulator = Accumulator

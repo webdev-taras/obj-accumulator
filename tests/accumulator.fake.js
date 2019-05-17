@@ -9,9 +9,10 @@ const accumulator = sinon.fake.returns(item)
 
 class Accumulator {
   constructor(...params) {
-    const { list } = accumulator(...params)
-    this.list = list
+    accumulator(...params)
   }
 }
 
-module.exports = { item, list, validator, accumulator, Accumulator }
+const accumulatorFactory = (...params) => new Accumulator(...params)
+
+module.exports = { item, list, validator, accumulator, accumulatorFactory }
