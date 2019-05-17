@@ -1,4 +1,6 @@
-module.exports = accumulator
+const { isNotEmpty } = require('./validators')
+const getter = require('./getter')
+const setter = require('./setter')
 
 function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list') {
   const storage = {}
@@ -22,27 +24,4 @@ function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list
   return item
 }
 
-function getter(itemName, listName) {
-  return (target, prop) => {
-    if (!target.hasOwnProperty(prop)) {
-      throw new Error(`${itemName} "${prop}" is not present in ${listName}`)
-    }
-    return target[prop]
-  }
-}
-
-function setter(validator, itemName, listName) {
-  return (target, prop, value) => {
-    if (target.hasOwnProperty(prop)) {
-      throw new Error(`${itemName} "${prop}" already present in ${listName}`)
-    }
-    if (validator && !validator(value)) {
-      throw new Error(`value for ${itemName} "${prop}" is not valid`)
-    }
-    target[prop] = value
-  }
-}
-
-function isNotEmpty(obj) {
-  return (obj != undefined)
-}
+module.exports = accumulator

@@ -6,7 +6,6 @@
 ## 0.3.1 / 2019-05-24
 - update `README.md`
 - add usage examples
-- do some refactoring
 - add support the validator as a class
 - release v0.3.1
 - publish on npm@v0.3.1
@@ -14,6 +13,7 @@
 ## 0.3.0 / 2019-05-17
 - update `README.md`
 - add Accumulator class and use Proxy
+- do some refactoring
 - release v0.3.0
 
 ## 0.2.1 / 2019-05-13
