@@ -1,18 +1,12 @@
-## 0.3.3 / 2019-05-31
-- update `README.md`
-- add build (and minified version) ready for the browser
-- release v0.3.3
-- publish on npm@v0.3.3
-
-## 0.3.2 / 2019-05-24
+## 0.3.2 / 2019-05-31
 - update `README.md`
 - add usage examples
-- add support the validator as a class
 - release v0.3.2
 - publish on npm@v0.3.2
 
-## 0.3.1 / 2019-05-21
+## 0.3.1 / 2019-05-24
 - update `README.md`
+- add support the validator as a class
 - release v0.3.1
 
 ## 0.3.0 / 2019-05-17

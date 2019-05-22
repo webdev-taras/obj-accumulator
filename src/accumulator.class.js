@@ -1,18 +1,18 @@
-const { isNotEmpty } = require('./validators')
+const getValidator = require('./get-validator')
 const getter = require('./getter')
 const setter = require('./setter')
 
 class Accumulator {
   constructor(params = {}) {
     const {
-      validator = isNotEmpty,
+      validator,
       item = 'item',
       list = 'list'
     } = params
 
     const handler = {
       get: getter(item, list),
-      set: setter(validator, item, list),
+      set: setter(getValidator(validator), item, list),
       deleteProperty() {
         return false
       },

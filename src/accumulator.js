@@ -1,11 +1,11 @@
-const { isNotEmpty } = require('./validators')
+const getValidator = require('./get-validator')
 const getter = require('./getter')
 const setter = require('./setter')
 
-function accumulator(validator = isNotEmpty, itemName = 'item', listName = 'list') {
+function accumulator(validator, itemName = 'item', listName = 'list') {
   const storage = {}
   const getProp = getter(itemName, listName)
-  const setProp = setter(validator, itemName, listName)
+  const setProp = setter(getValidator(validator), itemName, listName)
 
   function item(name, obj) {
     if (arguments.length > 1) {

@@ -9,7 +9,7 @@ Adding object into storage can be restricted by validation (e.g. instanceof, typ
 > Install on Node.JS with [npm](https://www.npmjs.com/)
 
 ```bash
-$ npm install --save webdev-taras/obj-accumulator
+npm install --save webdev-taras/obj-accumulator
 ```
 
 ## Usage
@@ -153,4 +153,4 @@ service.list()
 
 ## License
 
-MIT © [Taras Panasyuk](sumy.taras@gmail.com)
+MIT © [Taras Panasyuk](webdev.taras@gmail.com)
