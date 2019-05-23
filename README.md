@@ -226,9 +226,28 @@ service.list()
 // result: ['common', 'main', 'my-first-service']
 ```
 
+### new Accumulator(params)
+
+> Creates new object as an **Acumulator** instance
+
+**params**:
+
+- validator [function]
+- item [string]
+- list [string]
+
+```javascript
+const { Accumulator } = require('obj-accumulator')
+const service = new Accumulator()
+
+service['main'] = { id: 2, title: 'main service'}
+service['main']
+// result: { id: 2, title: 'main service'}
+```
+
 ## Tests
 
-All test you can find in [tests](https://github.com/webdev-taras/obj-accumulator/blob/HEAD/tests) folder in repository.
+All tests you can find in [tests](https://github.com/webdev-taras/obj-accumulator/blob/HEAD/tests) folder in the repository.
 Test coverage is `100%`.
 
 ## License
