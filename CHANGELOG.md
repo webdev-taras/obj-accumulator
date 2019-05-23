@@ -1,3 +1,10 @@
+## 0.3.2
+- update `README.md`
+- make some fixes
+- add examples
+- release v0.3.2
+- publish on npm@v0.3.2
+
 ## 0.3.1 / 2019-05-23
 - update `README.md`
 - add support the validator as a class

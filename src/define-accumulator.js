@@ -1,8 +1,8 @@
-module.exports = (accumulator, accumulatorFactory) => {
+module.exports = (accumulator, accumulatorFactory, listFactory) => {
   return function defineAccumulator(obj, params) {
     const {
       validator,
-      item,
+      item = 'item',
       list,
       useProxy = false
     } = params
@@ -10,9 +10,13 @@ module.exports = (accumulator, accumulatorFactory) => {
     const createAccumulator = (useProxy) ? accumulatorFactory : accumulator
     const storage = createAccumulator(validator, item, listName)
 
-    if (!useProxy) {
-      Object.defineProperty(obj, listName, { get: storage.list, enumerable: false })
-    }
-    return Object.defineProperty(obj, item, { value: storage, enumerable: false })
+    const listFn = (useProxy)
+      ? listFactory(storage)
+      : storage.list
+
+    return Object.defineProperties(obj, {
+      [item]: { value: storage, enumerable: false },
+      [listName]: { get: listFn, enumerable: false },
+    })
   }
 }
