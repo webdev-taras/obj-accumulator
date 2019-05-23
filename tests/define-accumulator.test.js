@@ -46,7 +46,7 @@ test('defineAccumulator(storage, null, "module", "moduleList", true) adds one pr
   const params = { validator, item, list, useProxy: true }
   defineAccumulator(storage, params)
   t.true(storage.hasOwnProperty(item))
-  t.false(storage.hasOwnProperty(list))
+  t.true(storage.hasOwnProperty(list))
 
   const itemNameProps = Object.getOwnPropertyDescriptor(storage, item)
   t.not(itemNameProps.value, item)

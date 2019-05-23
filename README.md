@@ -16,6 +16,8 @@ npm install obj-accumulator
 
 ## Usage
 
+> For more use-cases try [examples](https://github.com/webdev-taras/obj-accumulator/blob/HEAD/examples)
+
 Three ways are provided to use `obj-accumulator` functionality:
 1. Receive function as a result of calling **accumulator()** and use it for access to storage
 2. Create new object as an **Acumulator** instance based on `Proxy`.
@@ -83,12 +85,25 @@ Then we can define *item* and *list* for some object, for example **app**, in or
 ```javascript
 const app = {}
 
-defineAccumulator(app, MyModule, 'module')
+defineAccumulator(app, {
+  validator: MyModule,
+  item: 'module'
+})
 // or
-defineAccumulator(app, MyService, 'service')
+defineAccumulator(app, {
+  validator: MyService,
+  item: 'service'
+})
 ```
-For example, `MyModule` and `MyService` are predefined classes.
-
+For example, `MyModule` and `MyService` are predefined classes, something like this:
+```javascript
+class MyService {
+  constructor({ id, title }) {
+    this.id = id
+    this.title = title
+  }
+}
+```
 Further we can add *services* by *name* to our *app*:
 ```javascript
 app.service('common', new MyService({ id: 1, title: 'common service'}))
@@ -166,17 +181,20 @@ defineAccumulator(storage, {
 const isTypeOf = (typeName) =>
   (value) => typeof(value) === typeName
 
-defineAccumulator(storage,{
+defineAccumulator(storage, {
   validator: isTypeOf('string'),
   item: 'token',
   list: 'tokens'
 })
 ```
-- validate by class (you can specify just class-function)
+- validate by class (you can specify just class-function). It's implemented by using [is-class-function](https://www.npmjs.com/package/is-class-function) library
 ```javascript
 class MyService() {}
 
-defineAccumulator(app, MyService, 'service')
+defineAccumulator(app, {
+  validator: MyService,
+  item: 'service'
+})
 ```
 Also you can use validation functions from widely used libraries.
 
@@ -207,6 +225,11 @@ service('main')
 service.list()
 // result: ['common', 'main', 'my-first-service']
 ```
+
+## Tests
+
+All test you can find in [tests](https://github.com/webdev-taras/obj-accumulator/blob/HEAD/tests) folder in repository.
+Test coverage is `100%`.
 
 ## License
 
