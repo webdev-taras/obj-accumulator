@@ -2,12 +2,13 @@ const test = require('ava')
 const defineAccumulatorFactory = require('../src/define-accumulator')
 const { item, list, validator, accumulator, accumulatorFactory, proxy, listFactory } = require('./accumulator.fake')
 
-const checkProperties = (t, itemName, listNameParam, useProxy = false) => {
+const checkProperties = (t, itemNameParam, listNameParam, useProxy = false) => {
+  const itemName = itemNameParam || 'item'
   const listName = listNameParam || itemName+'s'
   const storage = {}
 
   const defineAccumulator = defineAccumulatorFactory(accumulator, accumulatorFactory, listFactory)
-  const params = { item: itemName, list: listNameParam, useProxy }
+  const params = { item: itemNameParam, list: listNameParam, useProxy }
   defineAccumulator(storage, params)
   t.true(storage.hasOwnProperty(itemName))
   t.true(storage.hasOwnProperty(listName))
@@ -27,6 +28,8 @@ const checkProperties = (t, itemName, listNameParam, useProxy = false) => {
 test('defineAccumulator(storage, null, "module", "moduleList") adds two properties to storage', checkProperties, 'module', 'moduleList')
 
 test('defineAccumulator(storage, null, "module") adds two properties to storage', checkProperties, 'module')
+
+test('defineAccumulator(storage) adds two properties to storage', checkProperties)
 
 test('defineAccumulator(storage, validator, "module") calls accumulator()', t => {
   const storage = {}
