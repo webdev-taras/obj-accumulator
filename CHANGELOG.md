@@ -1,27 +1,18 @@
-## 0.3.2 / 2019-05-24
+## 0.3.1 / 2019-05-23
 - update `README.md`
-- add build (and minified version) ready for the browser
-- publish on npm@v0.3.2
-
-
-## 0.3.1 / 2019-05-17
-- update `README.md`
-- add usage examples
-- do some refactoring
+- add support the validator as a class
+- release v0.3.1
 - publish on npm@v0.3.1
 
-
-## 0.3.0 / 2019-05-15
-- update `README.md`
-- add Accumulator class and use Proxy
-- publish on npm@v0.3.0
-
+## 0.3.0 / 2019-05-17
+- add `Accumulator` class and use Proxy
+- change interface `defineAccumulator`
+- do some refactoring
 
 ## 0.2.1 / 2019-05-13
 - update `README.md`
 - `accumulator` returns just `item` as a result
 - do refactoring
-
 
 ## 0.2.0 / 2019-05-10
 - update `README.md`
@@ -41,7 +32,6 @@
 - add restriction: cannot add empty object in storage
 
 ## 0.0.1 / 2019-05-07
-- Initial version v0.0.1
 - add `CHANGELOG.md`
 - add `README.md`
 - export function `accumulator`
