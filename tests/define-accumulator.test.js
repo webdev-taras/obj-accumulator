@@ -1,19 +1,20 @@
 const test = require('ava')
 const defineAccumulatorFactory = require('../src/define-accumulator')
-const { item, list, validator, accumulator, accumulatorFactory } = require('./accumulator.fake')
+const { item, list, validator, accumulator, accumulatorFactory, proxy, listFactory } = require('./accumulator.fake')
 
-const checkProperties = (t, itemName, listNameParam) => {
+const checkProperties = (t, itemName, listNameParam, useProxy = false) => {
   const listName = listNameParam || itemName+'s'
   const storage = {}
 
-  const defineAccumulator = defineAccumulatorFactory(accumulator)
-  const params = { item: itemName, list: listNameParam }
+  const defineAccumulator = defineAccumulatorFactory(accumulator, accumulatorFactory, listFactory)
+  const params = { item: itemName, list: listNameParam, useProxy }
   defineAccumulator(storage, params)
   t.true(storage.hasOwnProperty(itemName))
   t.true(storage.hasOwnProperty(listName))
 
   const itemNameProps = Object.getOwnPropertyDescriptor(storage, itemName)
-  t.is(itemNameProps.value, item)
+  const result = useProxy ? proxy : item
+  t.is(itemNameProps.value, result)
   t.false(itemNameProps.writable)
   t.false(itemNameProps.enumerable)
 
@@ -33,34 +34,18 @@ test('defineAccumulator(storage, validator, "module") calls accumulator()', t =>
   const result = defineAccumulator(storage, { validator, item: 'module' })
 
   t.true(accumulator.calledWith(validator, 'module', 'modules'));
-  t.true(accumulator.returned(item));
   t.is(result, storage)
 })
 
-test('defineAccumulator(storage, null, "module", "moduleList", true) adds one property to storage', t => {
-  const item = 'module'
-  const list = 'moduleList'
-  const storage = {}
-
-  const defineAccumulator = defineAccumulatorFactory(accumulator, accumulatorFactory)
-  const params = { validator, item, list, useProxy: true }
-  defineAccumulator(storage, params)
-  t.true(storage.hasOwnProperty(item))
-  t.true(storage.hasOwnProperty(list))
-
-  const itemNameProps = Object.getOwnPropertyDescriptor(storage, item)
-  t.not(itemNameProps.value, item)
-  t.false(itemNameProps.writable)
-  t.false(itemNameProps.enumerable)
-})
+test('defineAccumulator(storage, null, "module", "moduleList", true) adds two properties to storage', checkProperties, 'module', 'moduleList', true)
 
 test('defineAccumulator(storage, validator, "module", "modules", true) calls class Accumulator', t => {
   const storage = {}
-  const defineAccumulator = defineAccumulatorFactory(() => {}, accumulatorFactory)
+  const defineAccumulator = defineAccumulatorFactory(() => {}, accumulatorFactory, listFactory)
   const params = { validator, item: 'module', list: 'modules', useProxy: true }
   const result = defineAccumulator(storage, params)
 
-  t.true(accumulator.calledWith(validator, 'module', 'modules'));
-  t.true(accumulator.returned(item));
+  t.true(listFactory.calledWith(proxy));
+  t.true(accumulatorFactory.calledWith(validator, 'module', 'modules'));
   t.is(result, storage)
 })

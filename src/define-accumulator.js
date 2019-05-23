@@ -1,4 +1,4 @@
-module.exports = (accumulator, accumulatorFactory) => {
+module.exports = (accumulator, accumulatorFactory, listFactory) => {
   return function defineAccumulator(obj, params) {
     const {
       validator,
@@ -11,7 +11,7 @@ module.exports = (accumulator, accumulatorFactory) => {
     const storage = createAccumulator(validator, item, listName)
 
     const listFn = (useProxy)
-      ? () => Object.keys(storage)
+      ? listFactory(storage)
       : storage.list
 
     return Object.defineProperties(obj, {

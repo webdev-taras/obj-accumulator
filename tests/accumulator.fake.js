@@ -3,8 +3,9 @@ const { spy, fake } = require('sinon')
 function item() {}
 item.list = list
 function list() {}
-const validator = spy((p) => typeof(p) === 'string')
 
+const validator = spy((p) => typeof(p) === 'string')
+const listFactory = fake.returns(list)
 const accumulator = fake.returns(item)
 const isNotEmpty = fake.returns(true)
 
@@ -15,7 +16,9 @@ class Accumulator {
   }
 }
 
-const accumulatorFactory = (validator, item, list) =>
-  new Accumulator({ validator, item, list })
+const proxy = new Accumulator()
 
-module.exports = { item, list, validator, accumulator, accumulatorFactory }
+const accumulatorFactory = fake.returns(proxy)
+  
+
+module.exports = { item, list, validator, accumulator, accumulatorFactory, proxy, listFactory }

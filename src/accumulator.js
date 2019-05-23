@@ -1,6 +1,7 @@
 const getValidator = require('./get-validator')
 const getter = require('./getter')
 const setter = require('./setter')
+const list = require('./list')
 
 function accumulator(validator, itemName = 'item', listName = 'list') {
   const storage = {}
@@ -15,12 +16,8 @@ function accumulator(validator, itemName = 'item', listName = 'list') {
       return getProp(storage, name)
     }
   }
-  
-  function list() {
-    return Object.keys(storage)
-  }
 
-  item.list = list
+  item.list = list(storage)
   return item
 }
 
