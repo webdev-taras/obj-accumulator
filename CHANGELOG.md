@@ -1,4 +1,4 @@
-## 0.3.2
+## 0.3.2 / 2019-05-23
 - update `README.md`
 - make some fixes
 - add examples
