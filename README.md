@@ -1,7 +1,8 @@
 # obj-accumulator
 
 Provides reliable way to accumulate and store objects in safe storage not changeable outside. Storage based on common Object but with several restrictions:
-- Add object into storage can be restricted by validation (e.g. instanceof, typeof, duck typing...) in order to be sure if all items in storage are the same type.
+
+- Adding item into the storage can be restricted by validation (e.g. instanceof, typeof, duck typing...) in order to be sure if all items in storage are the same type.
 - If you've already added object to storage using some key then you are not allowed to add another one with the same key (you can not override initial item)
 - If you try to get object by key that doesn't present in storage then you receive an error
 - Items cannot be removed from the list.
@@ -19,6 +20,7 @@ npm install obj-accumulator
 > For more use-cases try [examples](https://github.com/webdev-taras/obj-accumulator/blob/HEAD/examples)
 
 Three ways are provided to use `obj-accumulator` functionality:
+
 1. Receive function as a result of calling **accumulator()** and use it for access to storage
 2. Create new object as an **Acumulator** instance based on `Proxy`.
 3. Add apropriate properties to some object using **defineAccumulator()**
@@ -39,7 +41,9 @@ service('common', { id: 1, title: 'common service'})
 service('main', { id: 2, title: 'main service'})
 service('my-first-service', { id: 3, title: 'my first service'})
 ```
+
 and get *service* by name:
+
 ```javascript
 service('main')
 // result: { id: 2, title: 'main service'}
@@ -68,7 +72,9 @@ service['common'] = { id: 1, title: 'common service'}
 service['main'] = { id: 2, title: 'main service'}
 service['my-first-service'] = { id: 3, title: 'my first service'}
 ```
+
 and get *service* by name:
+
 ```javascript
 service['main']
 // result: { id: 2, title: 'main service'}
@@ -78,10 +84,13 @@ service['main']
 
 This option can be useful if you want to define accumulator as a property of some object.
 Just required function **defineAccumulator** from module:
+
 ```javascript
 const { defineAccumulator } = require('obj-accumulator')
 ```
+
 Then we can define *item* and *list* for some object, for example **app**, in order to collect modules, services, etc.:
+
 ```javascript
 const app = {}
 
@@ -95,7 +104,9 @@ defineAccumulator(app, {
   item: 'service'
 })
 ```
+
 For example, `MyModule` and `MyService` are predefined classes, something like this:
+
 ```javascript
 class MyService {
   constructor({ id, title }) {
@@ -104,18 +115,24 @@ class MyService {
   }
 }
 ```
-Further we can add *services* by *name* to our *app*:
+
+Therefor we can add *services* to our *app*:
+
 ```javascript
 app.service('common', new MyService({ id: 1, title: 'common service'}))
 app.service('main', new MyService({ id: 2, title: 'main service'}))
 app.service('my-first-service', new MyService({ id: 3, title: 'my first service'}))
 ```
+
 Also we can get *service* by name:
+
 ```javascript
 const mainService = app.service('main')
 // result: { id: 2, title: 'main service'}
 ```
+
 And get the list of names (of services):
+
 ```javascript
 const names = app.services
 // result: ['common', 'main', 'my-first-service']
@@ -124,7 +141,9 @@ names.forEach(name => {
   console.log(id, title)
 })
 ```
+
 Or even tranform name list to whole list of services if it needed:
+
 ```javascript
 const services = app.services.map(name => app.service(name))
 ```
@@ -164,10 +183,13 @@ defineAccumulator(app, {
 // app.service(name, object)
 // app.services
 ```
+
 > Parameter `validator` (e.g. isObject) is a function takes a value as the only argument, returns true if the value is valid and false otherwise.
 
 Here is some useful examples with use cases:
+
 - using - Array.isArray
+
 ```javascript
 defineAccumulator(storage, {
   validator: Array.isArray,
@@ -177,6 +199,7 @@ defineAccumulator(storage, {
 ```
 
 - validate by type
+
 ```javascript
 const isTypeOf = (typeName) =>
   (value) => typeof(value) === typeName
@@ -187,7 +210,9 @@ defineAccumulator(storage, {
   list: 'tokens'
 })
 ```
+
 - validate by class (you can specify just class-function). It's implemented by using [is-class-function](https://www.npmjs.com/package/is-class-function) library
+
 ```javascript
 class MyService() {}
 
@@ -196,6 +221,7 @@ defineAccumulator(app, {
   item: 'service'
 })
 ```
+
 Also you can use validation functions from widely used libraries.
 
 ### accumulator(\[validator\], \[item-name\], \[list-name\])

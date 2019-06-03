@@ -1,3 +1,9 @@
+## 0.3.3 / 2019-06-03
+- fix `README.md`
+- fix index.js
+- release v0.3.3
+- publish on npm@v0.3.3
+
 ## 0.3.2 / 2019-05-23
 - update `README.md`
 - make some fixes
